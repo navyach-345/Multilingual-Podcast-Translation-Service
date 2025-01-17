@@ -4,11 +4,6 @@
 The Multilingual Podcast Translation Service empowers podcasters to break language barriers by seamlessly converting podcast audio into multiple languages. With automated speech-to-text, translation, and text-to-speech capabilities, this system ensures global accessibility, enabling podcasters to reach diverse audiences efficiently.
 
 
-## **Project Team - 67** 
-- **Saketh Reddy Dodda** - Led backend development, implemented microservices, and designed the system architecture including Kubernetes and ingress configurations.  
-- **Navya Chalamalasetty** - Assisted with system architecture, integrated microservices into Kubernetes, and frontend development, auto-scaling and testing.
-
-
 ## **Key Features**
 - **Time-Efficient:** Automates speech-to-text, translation, and text-to-speech workflows, significantly reducing manual effort.  
 - **Enhanced Accessibility:** Enables content consumption across languages, promoting inclusivity for global audiences.  
@@ -91,8 +86,7 @@ Access the frontend via the deployed virtual machine's IP address. Upload podcas
 
 ## **Contact**
 For inquiries or support:  
-- **Saketh Reddy Dodda:** saketh.dodda@colorado.edu  
-- **Navya Chalamalasetty:** navya.chalamalasetty@colorado.edu  
+- **Navya Chalamalasetty:** navyach345@gmail.com  
 
 
 ## **Acknowledgements**
