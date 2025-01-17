@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Podcast Translator</title>
+  <link rel="icon" href="https://static.vecteezy.com/system/resources/previews/002/185/812/large_2x/podcast-neon-signs-style-text-free-vector.jpg" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <h1 class="header-text">Podcast Translator</h1>
+    </header>
+
+    <!-- Intro Message -->
+    <div class="intro-message">Hello Podcasters!</div>
+
+    <!-- File Upload Section -->
+    <div class="container" id="input-container">
+        <h2>From Local to Global, Translate Your Podcast!</h2>
+        <div class="upload-section">
+            <label for="file-upload" id="file-label">Select an MP3 File</label>
+            <input type="file" id="file-upload" accept=".mp3" />
+        </div>
+        <div id="options" class="hidden">
+            <select id="source-language" class="animated-dropdown">
+                <option value="" disabled selected>Select Source Language</option>
+            </select>
+
+            <select id="target-language" class="animated-dropdown">
+                <option value="" disabled selected>Select Target Language</option>
+            </select>
+
+            <div id="dialect-option" class="hidden">
+                <label for="dialect">Select Dialect:</label>
+                <select id="dialect"></select>
+            </div>
+        </div>
+        <button id="upload-btn" class="hidden">Translate</button>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loadingIndicator" class="loading-container hidden">
+        <div class="loading-icon">
+            <i class="fas fa-spinner fa-spin"></i>
+        </div>
+        <div class="loading-text">
+            Translating your request, please wait...
+        </div>
+    </div>
+
+    <!-- Output Section -->
+    <div id="output" class="container hidden">
+        <!-- Decoded Text -->
+        <h3 class="output-heading">Translated Text</h3>
+        <div id="translated-text" class="response-box"></div>
+
+        <!-- Audio Player -->
+        <h3 class="output-heading">Translated Audio</h3>
+        <div class="audio-player">
+            <div class="audio-controls">
+                <button id="playPauseBtn" class="control-btn">
+                    <i class="fas fa-play"></i>
+                </button>
+                <div class="timeline-container">
+                    <input type="range" id="seekSlider" class="timeline" value="0" step="1">
+                    <div class="time-display">
+                        <span id="currentTime">0:00</span>
+                        <span>/</span>
+                        <span id="duration">0:00</span>
+                    </div>
+                </div>
+                <div class="volume-container">
+                    <button id="muteBtn" class="control-btn">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                    <input type="range" id="volumeSlider" class="volume" min="0" max="1" step="0.1" value="1">
+                </div>
+                <select id="playbackSpeed" class="speed-select">
+                    <option value="0.5">0.5x</option>
+                    <option value="1" selected>1x</option>
+                    <option value="1.5">1.5x</option>
+                    <option value="2">2x</option>
+                </select>
+                <a id="downloadLink" href="#" download="translated_audio.mp3" class="download-btn">
+                    <i class="fas fa-download"></i>
+                </a>
+            </div>
+            <audio id="audioPlayer"></audio>
+        </div>
+    </div>
+
+    <!-- Reset Button -->
+    <div class="reset-container hidden">
+        <button id="reset-btn" class="reset-btn">Start Over</button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

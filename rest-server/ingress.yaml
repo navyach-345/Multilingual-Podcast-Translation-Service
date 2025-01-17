@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rest-server-ingress
+  annotations:
+    kubernetes.io/ingress.class: gce
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "100000"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "100000"
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "Content-Type, Authorization"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "http://<VM_IP_Address>"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /translate
+        pathType: Prefix
+        backend:
+          service:
+            name: rest-server
+            port:
+              number: 5000
+      - path: /results/
+        pathType: Prefix
+        backend:
+          service:
+            name: rest-server
+            port:
+              number: 5000

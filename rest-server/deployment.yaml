@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rest-server
+  labels:
+    app: rest-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rest-server
+  template:
+    metadata:
+      labels:
+        app: rest-server
+    spec:
+      containers:
+      - name: rest-server
+        image: gcr.io/speech-translation-443516/rest-server:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: "/etc/secrets/service-account-key.json"
+        volumeMounts:
+        - name: gcp-key
+          mountPath: "/etc/secrets"
+          readOnly: true
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 300
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 300
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+      volumes:
+      - name: gcp-key
+        secret:
+          secretName: gcp-rest-service-account-key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rest-server
+  labels:
+    app: rest-server
+spec:
+  ports:
+  - port: 5000
+    targetPort: 5000
+  selector:
+    app: rest-server
+  type: ClusterIP

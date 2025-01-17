@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: translation-service
+  labels:
+    app: translation-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: translation-service
+  template:
+    metadata:
+      labels:
+        app: translation-service
+    spec:
+      containers:
+      - name: translation-service
+        image: gcr.io/speech-translation-443516/translation-service:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: "/etc/secrets/service-account-key.json"
+        volumeMounts:
+        - name: gcp-key
+          mountPath: "/etc/secrets"
+          readOnly: true
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 300
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 300
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+      volumes:
+      - name: gcp-key
+        secret:
+          secretName: gcp-translation-service-account-key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: translation-service
+  labels:
+    app: translation-service
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: translation-service
+  type: ClusterIP
